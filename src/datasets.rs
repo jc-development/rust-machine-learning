@@ -1,0 +1,16 @@
+pub struct BostonHousing {
+    crim: f64,
+    zn: f64,
+    indus: f64,
+    chas: f64,
+    nox: f64,
+    rm: f64,
+    age: f64,
+    dis: f64,
+    rad: f64,
+    tax: f64,
+    ptratio: f64,
+    black: f64,
+    lstat: f64,
+    medv: f64,
+}
