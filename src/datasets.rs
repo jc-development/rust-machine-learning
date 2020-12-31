@@ -14,3 +14,51 @@ pub struct BostonHousing {
     lstat: f64,
     medv: f64,
 }
+
+impl BostonHousing {
+    pub fn new(v: Vec<&str>) -> BostonHousing {
+        let f64_formatted: Vec<f64> = v.iter().map(|s| s.parse().unwrap()).collect();
+
+        BostonHousing {
+            crim: f64_formatted[0],
+            zn: f64_formatted[1],
+            indus: f64_formatted[2],
+            chas: f64_formatted[3],
+            nox: f64_formatted[4],
+            rm: f64_formatted[5],
+            age: f64_formatted[6],
+            dis: f64_formatted[7],
+            rad: f64_formatted[8],
+            tax: f64_formatted[9],
+            ptratio: f64_formatted[10],
+            black: f64_formatted[11],
+            lstat: f64_formatted[12],
+            medv: f64_formatted[13],
+        }
+    }
+
+    pub fn into_feature_vector(&self) -> Vec<f64> {
+        vec![self.crim, self.zn, self.indus, self.chas, self.nox, self.rm, self.age, self.dis, self.rad, self.tax, self.ptratio, self.black, self.lstat]
+    }
+
+    pub fn into_targets(&self) -> f64 {
+        self.medv
+    }
+}
+
+fn get_boston_record(s: String) -> BostonHousing {
+    let v: Vec<&str> = s.split_whitespace().collect();
+    let b: BostonHousing = BostonHousing::new(v);
+    b
+}
+
+fn get_boston_records_from_file(fl: impl AsRef<Path>) -> Vec<BostonHousing> {
+    let file = File::open(fl).expect("no such file");
+    let buf = BuffReader::new(file);
+    buf.lines().enumerate()
+        .map(|(n, l)| l.expect(
+            &format!("Could not parse line no {}", n)
+        ))
+        .map(|r| get_boston_record(r))
+        .collect()
+}
