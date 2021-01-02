@@ -12,3 +12,4 @@ serde = "1"
 serde_derive = "1"
 rand = "0.6.5"
 csv = "1.0.7"
+ml-utils = { path = "../rustymachine-regression/ml-utils" }

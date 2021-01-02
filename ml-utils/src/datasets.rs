@@ -1,3 +1,9 @@
+use std::io::prelude::*;
+use std::io::BufReader;
+use std::path::Path;
+use std::fs::File;
+use std::vec::Vec;
+
 pub struct BostonHousing {
     crim: f64,
     zn: f64,
@@ -52,9 +58,9 @@ fn get_boston_record(s: String) -> BostonHousing {
     b
 }
 
-fn get_boston_records_from_file(fl: impl AsRef<Path>) -> Vec<BostonHousing> {
+pub fn get_boston_records_from_file(fl: impl AsRef<Path>) -> Vec<BostonHousing> {
     let file = File::open(fl).expect("no such file");
-    let buf = BuffReader::new(file);
+    let buf = BufReader::new(file);
     buf.lines().enumerate()
         .map(|(n, l)| l.expect(
             &format!("Could not parse line no {}", n)
